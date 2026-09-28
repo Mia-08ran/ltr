@@ -567,6 +567,205 @@
   .self-eval p { font-family: var(--font-serif); font-size: 1.3rem; color: var(--text-primary); line-height: 2; text-align: justify; }
   .self-eval p strong { color: var(--accent-gold); font-family: var(--font-display); font-weight: 900; font-style: italic; }
 
+
+  /* ===== 05 ABOUT ME：漂浮影像空间 ===== */
+  .about-collage-section {
+    position: relative;
+    margin-top: 1rem;
+  }
+
+  .about-collage {
+    position: relative;
+    height: min(820px, 78vw);
+    min-height: 620px;
+    margin: 0 -6vw;
+    overflow: hidden;
+    perspective: 1400px;
+    isolation: isolate;
+    background:
+      radial-gradient(circle at 50% 48%, rgba(239,76,172,.08), transparent 27%),
+      radial-gradient(circle at 68% 38%, rgba(78,205,196,.045), transparent 24%),
+      linear-gradient(180deg, rgba(255,255,255,.015), transparent 38%);
+  }
+
+  .about-collage::before {
+    content: "";
+    position: absolute;
+    inset: 7% 18%;
+    background-image:
+      linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+    background-size: 34px 34px;
+    mask-image: radial-gradient(circle, black 0%, transparent 70%);
+    -webkit-mask-image: radial-gradient(circle, black 0%, transparent 70%);
+    opacity: .55;
+    pointer-events: none;
+  }
+
+  .about-collage::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at center, transparent 38%, rgba(5,5,5,.68) 100%);
+    z-index: 20;
+  }
+
+  .about-collage-stage {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+  }
+
+  .about-card {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--w, 150px);
+    aspect-ratio: 4 / 3;
+    padding: 0;
+    border: 1px solid rgba(255,255,255,.14);
+    background: #0a0a0a;
+    box-shadow:
+      0 28px 70px rgba(0,0,0,.58),
+      0 0 0 1px rgba(239,76,172,.035);
+    overflow: hidden;
+    transform:
+      translate3d(calc(-50% + var(--x)), calc(-50% + var(--y)), var(--z))
+      rotate(var(--r))
+      scale(var(--s));
+    transform-style: preserve-3d;
+    transition:
+      filter .5s ease,
+      box-shadow .5s ease,
+      border-color .5s ease;
+    will-change: transform;
+    cursor: none;
+  }
+
+  .about-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,.12), transparent 32%, rgba(0,0,0,.12));
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .about-card img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    filter: saturate(.82) contrast(1.03);
+    transform: scale(1.015);
+    transition: transform .8s cubic-bezier(.19,1,.22,1), filter .5s ease;
+  }
+
+  .about-card:hover {
+    z-index: 30;
+    border-color: rgba(239,76,172,.5);
+    box-shadow:
+      0 35px 90px rgba(0,0,0,.78),
+      0 0 35px rgba(239,76,172,.12);
+    filter: brightness(1.08);
+  }
+
+  .about-card:hover img {
+    transform: scale(1.08);
+    filter: saturate(1.08) contrast(1.04);
+  }
+
+  .about-collage-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 21;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none;
+    mix-blend-mode: normal;
+  }
+
+  .about-collage-center .eyebrow {
+    display: block;
+    margin-bottom: .65rem;
+    font-family: var(--font-mono);
+    font-size: .68rem;
+    letter-spacing: .28em;
+    color: rgba(255,255,255,.5);
+  }
+
+  .about-collage-center h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 6vw, 5.8rem);
+    line-height: .95;
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: -.045em;
+    color: #fff;
+    text-shadow:
+      0 8px 35px rgba(0,0,0,.9),
+      0 0 35px rgba(239,76,172,.16);
+  }
+
+  .about-collage-center p {
+    margin: 1rem auto 0;
+    max-width: 440px;
+    font-family: var(--font-serif);
+    font-size: .92rem;
+    line-height: 1.8;
+    color: rgba(232,230,225,.62);
+    text-shadow: 0 4px 20px rgba(0,0,0,.9);
+  }
+
+  .about-collage-caption {
+    position: absolute;
+    left: 0;
+    bottom: 2.4rem;
+    z-index: 22;
+    font-family: var(--font-mono);
+    font-size: .66rem;
+    letter-spacing: .22em;
+    color: rgba(255,255,255,.36);
+  }
+
+  .about-collage-count {
+    position: absolute;
+    right: 0;
+    bottom: 2.4rem;
+    z-index: 22;
+    font-family: var(--font-mono);
+    font-size: .66rem;
+    letter-spacing: .18em;
+    color: rgba(255,255,255,.36);
+  }
+
+  @media (max-width: 900px) {
+    .about-collage {
+      height: 720px;
+      min-height: 720px;
+      margin: 0 -1rem;
+    }
+    .about-collage::before { inset: 12% 8%; }
+    .about-collage-center h3 { font-size: clamp(2.7rem, 12vw, 4.5rem); }
+    .about-collage-center p { width: min(72vw, 360px); font-size: .82rem; }
+    .about-card { width: var(--w-mobile, 116px); }
+    .about-collage-caption { left: 1rem; }
+    .about-collage-count { right: 1rem; }
+  }
+
+  @media (max-width: 560px) {
+    .about-collage {
+      height: 650px;
+      min-height: 650px;
+    }
+    .about-collage-center { width: 78%; }
+    .about-collage-center p { display: none; }
+    .about-card { width: var(--w-mobile, 96px); }
+  }
+
   /* ===== CONTACT ME 底部区域 ===== */
   .contact-section {
     padding: 8rem 0 10rem;
@@ -799,9 +998,10 @@
         <div class="exp-company">用色彩记录灵感，反哺视觉设计</div>
       </div>
       <div class="hobby-images">
-        <img class="interactable" src="https://astron-claw-media-prod.oss-cn-beijing.aliyuncs.com/astron-claw-media-prod/69291c48-d5a9-411b-bd68-d3f24d611ea3/url---4b4dc6a0-c81c-4b64-b83a-42872acd21b7.jpg">
-        <img class="interactable" src="https://astron-claw-media-prod.oss-cn-beijing.aliyuncs.com/astron-claw-media-prod/58f6f88e-d211-426b-9957-a4382d937be0/url---590b7281-3a47-4016-8e02-755fc92383b8.jpg">
-        <img class="interactable" src="https://astron-claw-media-prod.oss-cn-beijing.aliyuncs.com/astron-claw-media-prod/85ada50d-3a90-422f-94dc-8872b638b250/url---63e656db-6f3c-44d3-bbc3-b6019fea7d15.jpg">
+        <img class="interactable" src="image4.jpg" alt="丙烯画作品 01" loading="lazy">
+        <img class="interactable" src="https://astron-claw-media-prod.oss-cn-beijing.aliyuncs.com/astron-claw-media-prod/69291c48-d5a9-411b-bd68-d3f24d611ea3/url---4b4dc6a0-c81c-4b64-b83a-42872acd21b7.jpg" alt="丙烯画作品 02" loading="lazy">
+        <img class="interactable" src="https://astron-claw-media-prod.oss-cn-beijing.aliyuncs.com/astron-claw-media-prod/58f6f88e-d211-426b-9957-a4382d937be0/url---590b7281-3a47-4016-8e02-755fc92383b8.jpg" alt="丙烯画作品 03" loading="lazy">
+        <img class="interactable" src="https://astron-claw-media-prod.oss-cn-beijing.aliyuncs.com/astron-claw-media-prod/85ada50d-3a90-422f-94dc-8872b638b250/url---63e656db-6f3c-44d3-bbc3-b6019fea7d15.jpg" alt="丙烯画作品 04" loading="lazy">
       </div>
     </div>
 
@@ -817,16 +1017,60 @@
     </div>
   </section>
 
-  <section class="section" id="about">
+  <section class="section about-collage-section" id="about">
     <div class="section-header">
       <span class="section-number">05</span>
       <h2 class="section-title">About Me</h2>
       <div class="section-line"></div>
     </div>
-    <div class="self-eval" data-reveal>
-      <p>
-        光电工程专业出身，兼具<strong>理工科严谨思维</strong>与<strong>内容创作敏锐嗅觉</strong>。在 AI 浪潮中主动拥抱变化，将 AI 工具深度融入学习与创作流程，形成"技术理解力 × 内容表达力"的独特交叉优势。擅长从复杂技术中提炼核心洞察，用通俗语言让硬核知识触达更广受众。相信<strong>技术是手段，创造是终局</strong>——无论是优化光电检测算法，还是用 AI 放大内容产能，目标始终是让好的想法以最高效的方式，酷炫地落地。
-      </p>
+
+    <div class="about-collage" id="aboutCollage" data-reveal aria-label="About Me image gallery">
+      <div class="about-collage-stage" id="aboutCollageStage">
+        <figure class="about-card interactable" data-index="1" style="--i:1"><img src="1.jpg" alt="About Me image 1" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="2" style="--i:2"><img src="2.jpg" alt="About Me image 2" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="3" style="--i:3"><img src="3.jpg" alt="About Me image 3" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="4" style="--i:4"><img src="4.jpg" alt="About Me image 4" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="5" style="--i:5"><img src="5.jpg" alt="About Me image 5" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="6" style="--i:6"><img src="6.jpg" alt="About Me image 6" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="7" style="--i:7"><img src="7.jpg" alt="About Me image 7" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="8" style="--i:8"><img src="8.jpg" alt="About Me image 8" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="9" style="--i:9"><img src="9.jpg" alt="About Me image 9" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="10" style="--i:10"><img src="10.jpg" alt="About Me image 10" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="11" style="--i:11"><img src="11.jpg" alt="About Me image 11" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="12" style="--i:12"><img src="12.jpg" alt="About Me image 12" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="13" style="--i:13"><img src="13.jpg" alt="About Me image 13" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="14" style="--i:14"><img src="14.jpg" alt="About Me image 14" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="15" style="--i:15"><img src="15.jpg" alt="About Me image 15" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="16" style="--i:16"><img src="16.jpg" alt="About Me image 16" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="17" style="--i:17"><img src="17.jpg" alt="About Me image 17" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="18" style="--i:18"><img src="18.jpg" alt="About Me image 18" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="19" style="--i:19"><img src="19.jpg" alt="About Me image 19" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="20" style="--i:20"><img src="20.jpg" alt="About Me image 20" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="21" style="--i:21"><img src="21.jpg" alt="About Me image 21" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="22" style="--i:22"><img src="22.jpg" alt="About Me image 22" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="23" style="--i:23"><img src="23.jpg" alt="About Me image 23" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="24" style="--i:24"><img src="24.jpg" alt="About Me image 24" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="25" style="--i:25"><img src="25.jpg" alt="About Me image 25" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="26" style="--i:26"><img src="26.jpg" alt="About Me image 26" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="27" style="--i:27"><img src="27.jpg" alt="About Me image 27" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="28" style="--i:28"><img src="28.jpg" alt="About Me image 28" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="29" style="--i:29"><img src="29.jpg" alt="About Me image 29" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="30" style="--i:30"><img src="30.jpg" alt="About Me image 30" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="31" style="--i:31"><img src="31.jpg" alt="About Me image 31" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="32" style="--i:32"><img src="32.jpg" alt="About Me image 32" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="33" style="--i:33"><img src="33.jpg" alt="About Me image 33" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="34" style="--i:34"><img src="34.jpg" alt="About Me image 34" loading="lazy"></figure>
+        <figure class="about-card interactable" data-index="35" style="--i:35"><img src="35.jpg" alt="About Me image 35" loading="lazy"></figure>
+      </div>
+
+      <div class="about-collage-center">
+        <span class="eyebrow">TIANRAN-LI / VISUAL ARCHIVE</span>
+        <h3>About Me</h3>
+        <p>把学习、技术、创作与生活留下来的 35 个瞬间，组成一面属于我的视觉档案墙。</p>
+      </div>
+
+      <span class="about-collage-caption">MOVE YOUR CURSOR / EXPLORE THE ARCHIVE</span>
+      <span class="about-collage-count">01—35 / VISUAL NOTES</span>
     </div>
   </section>
 
@@ -1278,6 +1522,126 @@ document.querySelectorAll('.award-item[data-cert-img]').forEach(item => {
   item.addEventListener('mousemove', (e) => { if (activePopup) { activePopup.style.left = e.clientX + 'px'; activePopup.style.top = (e.clientY - 20) + 'px'; } });
   item.addEventListener('mouseleave', removeCertPopup);
 });
+</script>
+
+
+<script>
+/* ===== About Me 35 张照片：3D 漂浮墙 ===== */
+(() => {
+  const collage = document.getElementById('aboutCollage');
+  const stage = document.getElementById('aboutCollageStage');
+  if (!collage || !stage) return;
+
+  const cards = [...stage.querySelectorAll('.about-card')];
+  const layouts = [
+    [-35,-31,-80,-10,1.00], [4,-36,20,5,1.12], [36,-29,-30,10,.92],
+    [-49,-8,40,-12,.90], [-17,-10,120,7,1.15], [18,-9,65,-8,.98], [47,-5,-10,13,1.02],
+    [-43,18,-30,9,1.00], [-20,25,80,-7,.94], [7,20,155,6,1.18], [31,22,60,-11,.96],
+    [-51,42,10,-9,.84], [-30,46,100,8,.96], [0,43,190,-4,.98], [34,44,75,12,.88],
+    [54,30,-45,-7,.90], [-62,-28,-140,8,.78], [64,-18,-100,12,.82],
+    [-65,8,-80,-13,.80], [67,9,-30,10,.86], [-61,52,-100,6,.76], [61,48,-70,-10,.78],
+    [-8,-51,-110,11,.82], [21,-50,-55,-8,.84], [-39,-48,-10,8,.75], [45,-46,-125,7,.76],
+    [-74,-3,-130,5,.68], [76,4,-115,-7,.70], [-75,31,-145,11,.67], [74,32,-150,-8,.69],
+    [-46,63,-90,-7,.66], [-15,62,-30,9,.70], [17,61,-70,-6,.69], [48,62,-100,8,.65],
+    [0,70,-150,0,.62]
+  ];
+
+  const compactLayouts = [
+    [-34,-34,-70,-9,.9],[0,-38,20,5,1],[34,-33,-45,9,.85],
+    [-47,-8,35,-10,.8],[-18,-10,100,6,1.02],[17,-9,55,-7,.9],[45,-5,-10,11,.82],
+    [-43,19,-20,8,.85],[-19,24,75,-7,.88],[7,20,135,5,1.0],[32,22,50,-10,.86],
+    [-49,42,0,-7,.72],[-27,45,85,8,.82],[0,43,160,-4,.88],[31,44,55,10,.74],
+    [51,30,-45,-7,.76],[-60,-27,-120,8,.64],[61,-17,-95,11,.68],
+    [-61,7,-70,-12,.66],[62,9,-25,10,.70],[-59,51,-95,5,.62],[60,48,-65,-9,.64],
+    [-9,-53,-100,10,.68],[22,-51,-50,-8,.68],[-39,-49,-5,8,.62],[44,-47,-110,7,.62],
+    [-72,-1,-125,5,.56],[72,4,-105,-7,.58],[-73,31,-135,10,.55],[73,32,-140,-8,.56],
+    [-45,63,-85,-7,.54],[-15,64,-20,9,.58],[17,63,-60,-6,.56],[47,63,-95,8,.52],[0,72,-145,0,.50]
+  ];
+
+  let compact = window.innerWidth < 900;
+  let pointerX = 0, pointerY = 0, targetX = 0, targetY = 0;
+  let scrollOffset = 0;
+
+  function applyLayout() {
+    const data = compact ? compactLayouts : layouts;
+    const width = compact ? 108 : 158;
+    cards.forEach((card, i) => {
+      const [x,y,z,r,s] = data[i];
+      const jitterX = Math.sin((i + 1) * 12.37) * (compact ? 3 : 5);
+      const jitterY = Math.cos((i + 1) * 8.91) * (compact ? 3 : 5);
+      card.style.setProperty('--x', (x * (compact ? 1.45 : 1.0) + jitterX) + 'vw');
+      card.style.setProperty('--y', (y * (compact ? 1.18 : 1.0) + jitterY) + 'vh');
+      card.style.setProperty('--z', z + 'px');
+      card.style.setProperty('--r', r + 'deg');
+      card.style.setProperty('--s', s);
+      card.style.setProperty('--w', width + 'px');
+      card.style.setProperty('--w-mobile', Math.max(82, width - 22) + 'px');
+      card.style.zIndex = 2 + Math.round((z + 180) / 20);
+    });
+  }
+
+  function render() {
+    const rx = pointerX * (compact ? 2.8 : 5.5);
+    const ry = pointerY * (compact ? 2.2 : 4.2);
+    cards.forEach((card, i) => {
+      const depth = parseFloat(card.style.getPropertyValue('--z')) || 0;
+      const factor = 0.45 + (depth + 180) / 420;
+      const x = pointerX * 18 * factor;
+      const y = pointerY * 14 * factor;
+      const base = card.style.transform;
+      card.style.transform = base.replace('translate3d(', 'translate3d(');
+      card.style.setProperty('--px', x + 'px');
+      card.style.setProperty('--py', y + 'px');
+    });
+    stage.style.transform = 'rotateX(' + (-ry) + 'deg) rotateY(' + rx + 'deg) translate3d(0,' + scrollOffset + 'px,0)';
+    requestAnimationFrame(render);
+  }
+
+  // 将鼠标位移转为整组空间的轻微视差；单张卡片保留自己的旋转与深度。
+  function updateCards() {
+    cards.forEach((card, i) => {
+      const depth = parseFloat(card.style.getPropertyValue('--z')) || 0;
+      const factor = 0.55 + (depth + 180) / 420;
+      const px = pointerX * (compact ? 8 : 14) * factor;
+      const py = pointerY * (compact ? 6 : 10) * factor;
+      const [x,y,z,r,s] = (compact ? compactLayouts : layouts)[i];
+      const jitterX = Math.sin((i + 1) * 12.37) * (compact ? 3 : 5);
+      const jitterY = Math.cos((i + 1) * 8.91) * (compact ? 3 : 5);
+      card.style.transform =
+        'translate3d(calc(-50% + ' + (x * (compact ? 1.45 : 1.0) + jitterX) + 'vw + ' + px + 'px), calc(-50% + ' +
+        (y * (compact ? 1.18 : 1.0) + jitterY) + 'vh + ' + py + 'px), ' + z + 'px) rotate(' + r + 'deg) scale(' + s + ')';
+    });
+  }
+
+  collage.addEventListener('pointermove', e => {
+    const rect = collage.getBoundingClientRect();
+    pointerX = (e.clientX - rect.left) / rect.width - 0.5;
+    pointerY = (e.clientY - rect.top) / rect.height - 0.5;
+  }, {passive:true});
+
+  collage.addEventListener('pointerleave', () => {
+    targetX = targetY = 0;
+    pointerX *= .35;
+    pointerY *= .35;
+  });
+
+  window.addEventListener('scroll', () => {
+    const rect = collage.getBoundingClientRect();
+    const center = window.innerHeight * .55;
+    const delta = (rect.top + rect.height / 2 - center) / window.innerHeight;
+    scrollOffset = Math.max(-28, Math.min(28, -delta * 28));
+  }, {passive:true});
+
+  window.addEventListener('resize', () => {
+    compact = window.innerWidth < 900;
+    applyLayout();
+    updateCards();
+  });
+
+  applyLayout();
+  updateCards();
+  render();
+})();
 </script>
 
 </body>
