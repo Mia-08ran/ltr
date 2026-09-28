@@ -573,7 +573,7 @@
 /* ===== 05 ABOUT ME：35 张照片影像贴图墙 ===== */
   .about-collage-section { position:relative; margin-top:1rem; }
   .about-collage {
-    position:relative; height:100vh; min-height:760px; margin:0 -6vw;
+    position:relative; height:112vh; min-height:820px; margin:0 -9vw;
     overflow:hidden; perspective:1600px; isolation:isolate;
     background:
       radial-gradient(ellipse at 50% 48%, rgba(239,76,172,.105), rgba(239,76,172,.035) 24%, transparent 52%),
@@ -594,7 +594,7 @@
   }
   .about-collage-stage { position:absolute; inset:0; transform-style:preserve-3d; }
   .about-card {
-    position:absolute;width:var(--w,14vw); aspect-ratio:4/3;
+    position:absolute;width:var(--w,11.8vw); aspect-ratio:4/3;
     padding:0; border:1px solid rgba(255,255,255,.13); border-radius:1px;
     background:rgba(10,10,10,.88);
     box-shadow:0 24px 55px rgba(0,0,0,.58),0 0 0 1px rgba(239,76,172,.035);
@@ -624,13 +624,13 @@
   .about-collage-count { right:0; color:rgba(255,255,255,.4); }
   .about-collage.is-complete .about-collage-count { color:rgba(239,76,172,.72); }
   @media(max-width:900px){
-    .about-collage{height:100svh;min-height:680px;margin:0 -1rem;}
-    .about-card{width:var(--w-mobile,24vw);}
+    .about-collage{height:112svh;min-height:820px;margin:0 -1rem;}
+    .about-card{width:var(--w-mobile,18.5vw);}
     .about-collage-caption{left:1rem}.about-collage-count{right:1rem}
   }
   @media(max-width:560px){
-    .about-collage{height:100svh;min-height:650px;}
-    .about-card{width:var(--w-mobile,24vw);}
+    .about-collage{height:112svh;min-height:760px;}
+    .about-card{width:var(--w-mobile,18.5vw);}
     .about-collage-caption,.about-collage-count{bottom:1.4rem;font-size:.55rem;}
   }
 
@@ -1377,20 +1377,20 @@ document.querySelectorAll('.award-item[data-cert-img]').forEach(item => {
   const cards=[...stage.querySelectorAll('.about-card')];
 
   const desktopPositions=[
-    [5,6,-18,-35,1.02],[19,7,12,20,.98],[33,5,-8,-15,1.04],[47,8,16,35,1.00],[61,5,-12,-20,1.03],[75,8,10,25,.98],[89,6,-18,-35,.96],
-    [4,27,14,30,.98],[18,25,-8,-10,1.03],[32,28,11,40,.99],[46,25,-13,-25,1.05],[60,28,8,15,1.00],[74,25,-10,-45,1.02],[89,27,14,20,.96],
-    [6,48,-12,-25,1.03],[20,46,10,30,.98],[34,50,-7,-15,1.04],[48,47,12,45,1.00],[62,50,-11,-30,1.04],[76,47,8,20,.98],[91,49,-15,-40,.95],
-    [4,69,10,25,.98],[18,67,-12,-20,1.03],[32,71,7,35,1.00],[46,68,-10,-35,1.05],[60,71,13,20,1.00],[74,68,-8,-15,1.02],[89,70,11,30,.96],
-    [7,90,-14,-30,1.00],[21,88,9,20,.98],[35,92,-6,-10,1.04],[49,89,14,40,1.01],[63,92,-12,-25,1.03],[77,89,8,15,.98],[91,91,-16,-35,.94]
+    [1,2,0,0,1],[15.4,2,0,0,1],[29.8,2,0,0,1],[44.2,2,0,0,1],[58.6,2,0,0,1],[73,2,0,0,1],[87.4,2,0,0,1],
+    [1,22,0,0,1],[15.4,22,0,0,1],[29.8,22,0,0,1],[44.2,22,0,0,1],[58.6,22,0,0,1],[73,22,0,0,1],[87.4,22,0,0,1],
+    [1,42,0,0,1],[15.4,42,0,0,1],[29.8,42,0,0,1],[44.2,42,0,0,1],[58.6,42,0,0,1],[73,42,0,0,1],[87.4,42,0,0,1],
+    [1,62,0,0,1],[15.4,62,0,0,1],[29.8,62,0,0,1],[44.2,62,0,0,1],[58.6,62,0,0,1],[73,62,0,0,1],[87.4,62,0,0,1],
+    [1,82,0,0,1],[15.4,82,0,0,1],[29.8,82,0,0,1],[44.2,82,0,0,1],[58.6,82,0,0,1],[73,82,0,0,1],[87.4,82,0,0,1]
   ];
   const mobilePositions=[
-    [4,5,-15,-20,.90],[28,6,12,15,.94],[52,5,-10,-15,.92],[76,7,15,20,.88],[98,6,-12,-25,.82],
-    [3,23,10,20,.88],[27,25,-8,-15,.94],[51,22,13,30,.90],[75,25,-12,-20,.92],[98,23,9,15,.82],
-    [4,42,-10,-25,.92],[28,44,8,20,.90],[52,41,-13,-10,.94],[76,44,11,25,.89],[98,42,-8,-20,.80],
-    [3,61,12,20,.88],[27,63,-10,-25,.93],[51,60,8,15,.91],[75,63,-13,-30,.90],[98,61,10,20,.80],
-    [5,80,-9,-20,.88],[28,82,13,25,.91],[52,79,-11,-15,.92],[76,82,9,30,.87],[98,80,-14,-25,.78],
-    [16,98,-10,-15,.78],[39,98,8,20,.80],[62,98,-12,-20,.78],[85,98,10,15,.74],[50,99,-5,-30,.68],
-    [6,99,12,10,.68],[20,99,-8,-10,.70],[80,99,-12,10,.68],[94,99,8,-10,.66],[50,100,-6,0,.60]
+    [1,2,0,0,1],[20.7,2,0,0,1],[40.4,2,0,0,1],[60.1,2,0,0,1],[79.8,2,0,0,1],
+    [1,17,0,0,1],[20.7,17,0,0,1],[40.4,17,0,0,1],[60.1,17,0,0,1],[79.8,17,0,0,1],
+    [1,32,0,0,1],[20.7,32,0,0,1],[40.4,32,0,0,1],[60.1,32,0,0,1],[79.8,32,0,0,1],
+    [1,47,0,0,1],[20.7,47,0,0,1],[40.4,47,0,0,1],[60.1,47,0,0,1],[79.8,47,0,0,1],
+    [1,62,0,0,1],[20.7,62,0,0,1],[40.4,62,0,0,1],[60.1,62,0,0,1],[79.8,62,0,0,1],
+    [1,77,0,0,1],[20.7,77,0,0,1],[40.4,77,0,0,1],[60.1,77,0,0,1],[79.8,77,0,0,1],
+    [1,92,0,0,1],[20.7,92,0,0,1],[40.4,92,0,0,1],[60.1,92,0,0,1],[79.8,92,0,0,1]
   ];
 
   let compact=window.innerWidth<900,progress=0,pointerX=0,pointerY=0,lastWheelTime=0;
@@ -1416,19 +1416,18 @@ document.querySelectorAll('.award-item[data-cert-img]').forEach(item => {
       const start=i/total,end=(i+1)/total;
       const local=Math.max(0,Math.min(1,(progress-start)/(end-start)));
       const eased=easeOutCubic(local);
-      const hiddenX=-18-(i%3)*4,hiddenY=y+((i%2===0)?-5:5);
-      const currentX=hiddenX+(x-hiddenX)*eased;
-      const currentY=hiddenY+(y-hiddenY)*eased;
-      const currentZ=z-(1-eased)*150;
-      const currentScale=s*(.72+eased*.28);
-      const currentRotation=r+(1-eased)*(i%2===0?-12:12);
+      const currentX=x;
+      const currentY=y;
+      const currentZ=0;
+      const currentScale=s*(.96+eased*.04);
+      const currentRotation=r;
       const opacity=Math.max(0,Math.min(1,eased));
       const blur=(1-eased)*5;
-      const parallaxX=pointerX*(compact?2.8:5.5),parallaxY=pointerY*(compact?2.2:4.2);
-      card.style.setProperty('--left','calc('+currentX+'vw - '+(compact?'12':'7')+'vw)');
-      card.style.setProperty('--top','calc('+currentY+'vh - '+(compact?'9':'5.25')+'vw)');
-      card.style.setProperty('--drag-x',(Number(card.dataset.dragX||0)+parallaxX)+'px');
-      card.style.setProperty('--drag-y',(Number(card.dataset.dragY||0)+parallaxY)+'px');
+      const parallaxX=0,parallaxY=0;
+      card.style.setProperty('--left',currentX+'vw');
+      card.style.setProperty('--top',currentY+'vh');
+      card.style.setProperty('--drag-x',Number(card.dataset.dragX||0)+'px');
+      card.style.setProperty('--drag-y',Number(card.dataset.dragY||0)+'px');
       card.style.setProperty('--pz',currentZ+'px');
       card.style.setProperty('--scale',currentScale);
       card.style.setProperty('--r',currentRotation+'deg');
