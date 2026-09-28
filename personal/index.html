@@ -592,7 +592,7 @@
   }
   .about-collage-stage { position:absolute; inset:0; transform-style:preserve-3d; }
   .about-card {
-    position:absolute; left:0; top:0; width:var(--w,148px); aspect-ratio:4/3;
+    position:absolute; left:0; top:0; width:var(--w,14vw); aspect-ratio:4/3;
     padding:0; border:1px solid rgba(255,255,255,.13); border-radius:1px;
     background:rgba(10,10,10,.88);
     box-shadow:0 24px 55px rgba(0,0,0,.58),0 0 0 1px rgba(239,76,172,.035);
@@ -623,12 +623,12 @@
   .about-collage.is-complete .about-collage-count { color:rgba(239,76,172,.72); }
   @media(max-width:900px){
     .about-collage{height:100svh;min-height:680px;margin:0 -1rem;}
-    .about-card{width:var(--w-mobile,100px);}
+    .about-card{width:var(--w-mobile,24vw);}
     .about-collage-caption{left:1rem}.about-collage-count{right:1rem}
   }
   @media(max-width:560px){
     .about-collage{height:100svh;min-height:650px;}
-    .about-card{width:var(--w-mobile,76px);}
+    .about-card{width:var(--w-mobile,24vw);}
     .about-collage-caption,.about-collage-count{bottom:1.4rem;font-size:.55rem;}
   }
 
@@ -1416,12 +1416,12 @@ document.querySelectorAll('.award-item[data-cert-img]').forEach(item => {
 
   function positions(){return compact?mobilePositions:desktopPositions;}
   function setup(){
-    const data=positions(),width=compact?150:230;
+    const data=positions(),width=compact?'24vw':'14vw';
     cards.forEach((card,i)=>{
       const [x,y,r,z,s]=data[i];
       card.dataset.x=x;card.dataset.y=y;card.dataset.r=r;card.dataset.z=z;card.dataset.s=s;
-      card.style.setProperty('--w',width+'px');
-      card.style.setProperty('--w-mobile',Math.max(68,width-22)+'px');
+      card.style.setProperty('--w',width);
+      card.style.setProperty('--w-mobile',compact?'24vw':'14vw');
       card.style.zIndex=10+i;
     });
     render();
@@ -1443,8 +1443,8 @@ document.querySelectorAll('.award-item[data-cert-img]').forEach(item => {
       const opacity=Math.max(0,Math.min(1,eased));
       const blur=(1-eased)*5;
       const parallaxX=pointerX*(compact?2.8:5.5),parallaxY=pointerY*(compact?2.2:4.2);
-      card.style.setProperty('--px','calc('+currentX+'% + '+parallaxX+'px)');
-      card.style.setProperty('--py','calc('+currentY+'% + '+parallaxY+'px)');
+      card.style.setProperty('--px','calc('+currentX+'vw + '+parallaxX+'px)');
+      card.style.setProperty('--py','calc('+currentY+'vh + '+parallaxY+'px)');
       card.style.setProperty('--pz',currentZ+'px');
       card.style.setProperty('--scale',currentScale);
       card.style.setProperty('--r',currentRotation+'deg');
