@@ -568,7 +568,9 @@
   .self-eval p strong { color: var(--accent-gold); font-family: var(--font-display); font-weight: 900; font-style: italic; }
 
 
-  /* ===== 05 ABOUT ME：35 张照片影像贴图墙 ===== */
+  /* ===== 01 PROJECTS：项目展示 ===== */
+.projects-showcase{display:flex;flex-direction:column;gap:5rem;margin-top:2rem}.project-feature{position:relative;padding:3.2rem 0 3.8rem;border-top:1px solid rgba(239,76,172,.18)}.project-feature:last-child{border-bottom:1px solid rgba(239,76,172,.12)}.project-meta{display:flex;justify-content:space-between;gap:2rem;align-items:center;margin-bottom:2rem;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.18em;color:var(--text-dim);text-transform:uppercase}.project-category{color:rgba(239,76,172,.72)}.project-main{display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,.36fr);gap:4rem;align-items:end}.project-title{font-family:var(--font-heading);font-size:clamp(2.3rem,5vw,4.8rem);line-height:.98;letter-spacing:-.04em;margin-bottom:.7rem}.project-subtitle{font-family:var(--font-serif);font-size:clamp(1rem,1.6vw,1.35rem);color:rgba(255,255,255,.78);margin-bottom:1.35rem}.project-description{max-width:760px;font-size:.96rem;line-height:1.95;color:var(--text-secondary);margin-bottom:.8rem}.project-description-small{font-size:.84rem;color:var(--text-dim)}.project-description strong{color:var(--text-primary)}.project-description code,.project-copy code{font-family:var(--font-mono);color:var(--accent-gold);font-size:.82em}.project-flow{display:flex;flex-wrap:wrap;gap:.7rem 1.6rem;margin:1.8rem 0;font-family:var(--font-mono);font-size:.66rem;color:rgba(255,255,255,.48);letter-spacing:.08em}.project-flow b{color:var(--accent-pink);margin-right:.35rem}.project-tech{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;font-family:var(--font-mono);font-size:.64rem}.project-tech>span{color:var(--text-dim);margin-right:.25rem}.project-tech code{padding:.35rem .55rem;border:1px solid rgba(201,168,76,.18);color:rgba(255,255,255,.62)}.project-quote{align-self:end;padding:1.4rem 0 0 1.5rem;border-left:1px solid rgba(239,76,172,.32);font-family:var(--font-serif);font-size:.92rem;line-height:1.9;color:rgba(255,255,255,.5)}.project-knowledge{padding-top:1rem}.knowledge-flow{display:flex;flex-wrap:wrap;align-items:center;gap:.55rem;margin:1.7rem 0;font-family:var(--font-mono);font-size:.65rem}.knowledge-flow code{padding:.45rem .65rem;border:1px solid rgba(78,205,196,.18);color:rgba(78,205,196,.72)}.knowledge-flow span{color:var(--text-dim)}.project-mantra{font-family:var(--font-display);font-style:italic;font-size:1rem;color:rgba(255,255,255,.56)}.knowledge-note{border:1px solid rgba(78,205,196,.12);padding:1.5rem;background:rgba(78,205,196,.025)}.knowledge-note span{font-family:var(--font-mono);font-size:.58rem;letter-spacing:.18em;color:rgba(78,205,196,.6)}.knowledge-note p{margin-top:1.3rem;font-family:var(--font-serif);font-size:1rem;line-height:2;color:rgba(255,255,255,.55)}@media(max-width:800px){.project-main{grid-template-columns:1fr;gap:2rem}.project-meta{align-items:flex-start;flex-direction:column;gap:.45rem}}
+/* ===== 05 ABOUT ME：35 张照片影像贴图墙 ===== */
   .about-collage-section { position:relative; margin-top:1rem; }
   .about-collage {
     position:relative; height:100vh; min-height:760px; margin:0 -6vw;
@@ -592,11 +594,11 @@
   }
   .about-collage-stage { position:absolute; inset:0; transform-style:preserve-3d; }
   .about-card {
-    position:absolute; left:0; top:0; width:var(--w,14vw); aspect-ratio:4/3;
+    position:absolute;width:var(--w,14vw); aspect-ratio:4/3;
     padding:0; border:1px solid rgba(255,255,255,.13); border-radius:1px;
     background:rgba(10,10,10,.88);
     box-shadow:0 24px 55px rgba(0,0,0,.58),0 0 0 1px rgba(239,76,172,.035);
-    overflow:hidden; transform:translate3d(var(--px),var(--py),var(--pz)) rotate(var(--r)) scale(var(--scale));
+    overflow:hidden; left:var(--left,0);top:var(--top,0);transform:translate3d(var(--drag-x,0px),var(--drag-y,0px),var(--pz)) rotate(var(--r)) scale(var(--scale));
     transform-style:preserve-3d; opacity:0; filter:blur(5px); will-change:transform,opacity,filter; cursor:none;
   }
   .about-card::before {
@@ -754,31 +756,11 @@
 <div class="page-wrapper">
 
   <section class="section" id="skills">
-    <div class="section-header">
-      <span class="section-number">01</span>
-      <h2 class="section-title">What can I do</h2>
-      <div class="section-line"></div>
-    </div>
-    <div class="skills-showcase">
-      <article class="skills-showcase-row" data-reveal aria-labelledby="build-things-title">
-        <div class="skills-showcase-copy">
-          <h3 class="skills-showcase-title" id="build-things-title">I build things</h3>
-        </div>
-        <div class="skills-showcase-media" aria-label="I build things project images">
-          <div class="skills-image-slot" role="img" aria-label="I build things image 1"><img src="image1.jpg" alt="I build things — image 1" loading="lazy"></div>
-          <div class="skills-image-slot" role="img" aria-label="I build things image 2"><img src="image2.jpg" alt="I build things — image 2" loading="lazy"></div>
-        </div>
-      </article>
-      <article class="skills-showcase-row skills-showcase-row--reverse skills-showcase-row--tools" data-reveal aria-labelledby="love-tools-title">
-        <div class="skills-showcase-copy">
-          <h3 class="skills-showcase-title" id="love-tools-title">I love tools</h3>
-        </div>
-        <div class="skills-showcase-media" aria-label="I love tools image">
-          <div class="skills-image-slot" role="img" aria-label="I love tools image"><img src="image3.png" alt="I love tools — image 3" loading="lazy"></div>
-        </div>
-      </article>
-    </div>
-  </section>
+<div class="section-header"><span class="section-number">01</span><h2 class="section-title">What can I do</h2><div class="section-line"></div></div>
+<div class="projects-showcase">
+<article class="project-feature" data-reveal><div class="project-meta"><span>01 / PROJECT</span><span class="project-category">SMART SORTING · 智能垃圾分类</span></div><div class="project-main"><div class="project-copy"><h3 class="project-title">Smart Sorting</h3><p class="project-subtitle">让垃圾自己“选择”该去哪里。</p><p class="project-description">我制作了一套基于传感器与舵机控制的智能垃圾分类装置。装置根据检测到的垃圾特征进行判断，并将分类结果映射为不同的舵机旋转角度，让机械结构自动转向对应位置完成分流。</p><p class="project-description project-description-small">从电路搭建、控制程序，到舵机角度校准，我不断测试硬件与程序之间的配合，让一个想法逐渐变成真正能够运行的实体装置。</p><div class="project-flow"><span><b>01</b> Detect</span><span><b>02</b> Decide</span><span><b>03</b> Control</span><span><b>04</b> Sort</span></div><div class="project-tech"><span>Tech Stack</span><code>Arduino</code><code>Servo</code><code>Sensor</code><code>C/C++</code><code>Hardware</code></div></div><div class="project-quote">“真正有趣的不是让一个舵机转起来，<br>而是让它知道为什么要转，以及应该转向哪里。”</div></div></article>
+<article class="project-feature project-knowledge" data-reveal><div class="project-meta"><span>02 / PROJECT</span><span class="project-category">KNOWLEDGE · PERSONAL WIKI</span></div><div class="project-main"><div class="project-copy"><h3 class="project-title">我的第二大脑</h3><p class="project-subtitle">一个不断生长的个人知识网络。</p><p class="project-description">我用 <strong>Obsidian</strong> 构建自己的知识库，将学习、实践、灵感与思考以 Markdown 的形式沉淀在 <code>RAW</code> 中。随着知识不断增加，我通过双向链接把不同主题连接起来，让孤立的笔记逐渐形成一张可以探索的 <strong>Wiki Network</strong>。</p><div class="knowledge-flow"><code>RAW</code><span>→</span><code>NOTES</code><span>→</span><code>LINKS</code><span>→</span><code>KNOWLEDGE GRAPH</code></div><p class="project-mantra">A personal wiki that grows with me.</p></div><div class="knowledge-note"><span>NODE / 01</span><p>每一个笔记都是一个节点，<br>每一条链接都是一次思考。</p></div></div></article>
+</div></section>
 
   <section class="section" id="education">
     <div class="section-header">
@@ -1443,8 +1425,10 @@ document.querySelectorAll('.award-item[data-cert-img]').forEach(item => {
       const opacity=Math.max(0,Math.min(1,eased));
       const blur=(1-eased)*5;
       const parallaxX=pointerX*(compact?2.8:5.5),parallaxY=pointerY*(compact?2.2:4.2);
-      card.style.setProperty('--px','calc('+currentX+'vw + '+parallaxX+'px)');
-      card.style.setProperty('--py','calc('+currentY+'vh + '+parallaxY+'px)');
+      card.style.setProperty('--left','calc('+currentX+'vw - '+(compact?'12':'7')+'vw)');
+      card.style.setProperty('--top','calc('+currentY+'vh - '+(compact?'9':'5.25')+'vw)');
+      card.style.setProperty('--drag-x',(Number(card.dataset.dragX||0)+parallaxX)+'px');
+      card.style.setProperty('--drag-y',(Number(card.dataset.dragY||0)+parallaxY)+'px');
       card.style.setProperty('--pz',currentZ+'px');
       card.style.setProperty('--scale',currentScale);
       card.style.setProperty('--r',currentRotation+'deg');
@@ -1482,6 +1466,19 @@ document.querySelectorAll('.award-item[data-cert-img]').forEach(item => {
   collage.addEventListener('pointerleave',()=>{pointerX*=.2;pointerY*=.2;render();});
   window.addEventListener('wheel',onWheel,{passive:false});
   window.addEventListener('resize',()=>{compact=window.innerWidth<900;setup();});
+  let draggingCard=null,dragStartX=0,dragStartY=0,originX=0,originY=0;
+  cards.forEach(card=>{
+    card.addEventListener('pointerdown',e=>{
+      if(!card.classList.contains('is-visible'))return;
+      draggingCard=card;dragStartX=e.clientX;dragStartY=e.clientY;originX=Number(card.dataset.dragX||0);originY=Number(card.dataset.dragY||0);card.setPointerCapture?.(e.pointerId);card.style.zIndex=1000;e.preventDefault();
+    });
+    card.addEventListener('pointermove',e=>{
+      if(draggingCard!==card)return;
+      card.dataset.dragX=originX+(e.clientX-dragStartX);card.dataset.dragY=originY+(e.clientY-dragStartY);render();
+    });
+    card.addEventListener('pointerup',e=>{if(draggingCard!==card)return;draggingCard=null;card.releasePointerCapture?.(e.pointerId);});
+    card.addEventListener('pointercancel',()=>{if(draggingCard===card)draggingCard=null;});
+  });
   setup();
 })();
 </script>
