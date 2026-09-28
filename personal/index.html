@@ -568,202 +568,68 @@
   .self-eval p strong { color: var(--accent-gold); font-family: var(--font-display); font-weight: 900; font-style: italic; }
 
 
-  /* ===== 05 ABOUT ME：漂浮影像空间 ===== */
-  .about-collage-section {
-    position: relative;
-    margin-top: 1rem;
-  }
-
+  /* ===== 05 ABOUT ME：35 张照片影像贴图墙 ===== */
+  .about-collage-section { position:relative; margin-top:1rem; }
   .about-collage {
-    position: relative;
-    height: min(820px, 78vw);
-    min-height: 620px;
-    margin: 0 -6vw;
-    overflow: hidden;
-    perspective: 1400px;
-    isolation: isolate;
+    position:relative; height:min(820px,72vw); min-height:680px; margin:0 -6vw;
+    overflow:hidden; perspective:1600px; isolation:isolate;
     background:
-      radial-gradient(circle at 50% 48%, rgba(239,76,172,.08), transparent 27%),
-      radial-gradient(circle at 68% 38%, rgba(78,205,196,.045), transparent 24%),
-      linear-gradient(180deg, rgba(255,255,255,.015), transparent 38%);
+      radial-gradient(ellipse at 50% 48%, rgba(239,76,172,.105), rgba(239,76,172,.035) 24%, transparent 52%),
+      radial-gradient(ellipse at 18% 72%, rgba(201,168,76,.055), transparent 32%),
+      radial-gradient(ellipse at 82% 25%, rgba(78,205,196,.045), transparent 30%),
+      linear-gradient(180deg, rgba(255,255,255,.012), rgba(0,0,0,.08));
   }
-
   .about-collage::before {
-    content: "";
-    position: absolute;
-    inset: 7% 18%;
-    background-image:
-      linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
-    background-size: 34px 34px;
-    mask-image: radial-gradient(circle, black 0%, transparent 70%);
-    -webkit-mask-image: radial-gradient(circle, black 0%, transparent 70%);
-    opacity: .55;
-    pointer-events: none;
+    content:""; position:absolute; inset:4%; pointer-events:none; opacity:.8;
+    background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+    background-size:42px 42px; mask-image:radial-gradient(ellipse at center,black 0%,transparent 78%);
+    -webkit-mask-image:radial-gradient(ellipse at center,black 0%,transparent 78%);
   }
-
   .about-collage::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: radial-gradient(circle at center, transparent 38%, rgba(5,5,5,.68) 100%);
-    z-index: 20;
+    content:""; position:absolute; inset:0; pointer-events:none; z-index:20;
+    background:radial-gradient(ellipse at center,transparent 48%,rgba(5,5,5,.48) 100%),
+      linear-gradient(180deg,rgba(5,5,5,.18),transparent 18%,transparent 82%,rgba(5,5,5,.35));
   }
-
-  .about-collage-stage {
-    position: absolute;
-    inset: 0;
-    transform-style: preserve-3d;
-  }
-
+  .about-collage-stage { position:absolute; inset:0; transform-style:preserve-3d; }
   .about-card {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: var(--w, 150px);
-    aspect-ratio: 4 / 3;
-    padding: 0;
-    border: 1px solid rgba(255,255,255,.14);
-    background: #0a0a0a;
-    box-shadow:
-      0 28px 70px rgba(0,0,0,.58),
-      0 0 0 1px rgba(239,76,172,.035);
-    overflow: hidden;
-    transform:
-      translate3d(calc(-50% + var(--x)), calc(-50% + var(--y)), var(--z))
-      rotate(var(--r))
-      scale(var(--s));
-    transform-style: preserve-3d;
-    transition:
-      filter .5s ease,
-      box-shadow .5s ease,
-      border-color .5s ease;
-    will-change: transform;
-    cursor: none;
+    position:absolute; left:0; top:0; width:var(--w,148px); aspect-ratio:4/3;
+    padding:0; border:1px solid rgba(255,255,255,.13); border-radius:1px;
+    background:rgba(10,10,10,.88);
+    box-shadow:0 20px 45px rgba(0,0,0,.5),0 0 0 1px rgba(239,76,172,.025);
+    overflow:hidden; transform:translate3d(var(--px),var(--py),var(--pz)) rotate(var(--r)) scale(var(--scale));
+    transform-style:preserve-3d; opacity:0; filter:blur(5px); will-change:transform,opacity,filter; cursor:none;
   }
-
+  .about-card::before {
+    content:""; position:absolute; inset:0; z-index:3; pointer-events:none;
+    background:linear-gradient(135deg,rgba(255,255,255,.10),transparent 28%,rgba(0,0,0,.16));
+  }
   .about-card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,.12), transparent 32%, rgba(0,0,0,.12));
-    pointer-events: none;
-    z-index: 2;
+    content:""; position:absolute; inset:-1px; z-index:4; pointer-events:none;
+    box-shadow:inset 0 0 0 1px rgba(239,76,172,.035);
   }
-
   .about-card img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-    filter: saturate(.82) contrast(1.03);
-    transform: scale(1.015);
-    transition: transform .8s cubic-bezier(.19,1,.22,1), filter .5s ease;
+    width:100%; height:100%; display:block; object-fit:cover;
+    filter:saturate(.82) contrast(1.04); transform:scale(1.015);
+    transition:transform .55s cubic-bezier(.19,1,.22,1),filter .45s ease;
   }
-
-  .about-card:hover {
-    z-index: 30;
-    border-color: rgba(239,76,172,.5);
-    box-shadow:
-      0 35px 90px rgba(0,0,0,.78),
-      0 0 35px rgba(239,76,172,.12);
-    filter: brightness(1.08);
+  .about-card.is-visible:hover { z-index:30!important; border-color:rgba(239,76,172,.55); box-shadow:0 30px 70px rgba(0,0,0,.72),0 0 28px rgba(239,76,172,.12); }
+  .about-card.is-visible:hover img { transform:scale(1.075); filter:saturate(1.06) contrast(1.05); }
+  .about-collage-caption,.about-collage-count {
+    position:absolute; bottom:2.2rem; z-index:22; font-family:var(--font-mono);
+    font-size:.64rem; letter-spacing:.22em; color:rgba(255,255,255,.34);
   }
-
-  .about-card:hover img {
-    transform: scale(1.08);
-    filter: saturate(1.08) contrast(1.04);
+  .about-collage-caption { left:0; }
+  .about-collage-count { right:0; color:rgba(255,255,255,.4); }
+  .about-collage.is-complete .about-collage-count { color:rgba(239,76,172,.72); }
+  @media(max-width:900px){
+    .about-collage{height:720px;min-height:720px;margin:0 -1rem;}
+    .about-card{width:var(--w-mobile,100px);}
+    .about-collage-caption{left:1rem}.about-collage-count{right:1rem}
   }
-
-  .about-collage-center {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    z-index: 21;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    pointer-events: none;
-    mix-blend-mode: normal;
-  }
-
-  .about-collage-center .eyebrow {
-    display: block;
-    margin-bottom: .65rem;
-    font-family: var(--font-mono);
-    font-size: .68rem;
-    letter-spacing: .28em;
-    color: rgba(255,255,255,.5);
-  }
-
-  .about-collage-center h3 {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: clamp(3rem, 6vw, 5.8rem);
-    line-height: .95;
-    font-weight: 900;
-    font-style: italic;
-    letter-spacing: -.045em;
-    color: #fff;
-    text-shadow:
-      0 8px 35px rgba(0,0,0,.9),
-      0 0 35px rgba(239,76,172,.16);
-  }
-
-  .about-collage-center p {
-    margin: 1rem auto 0;
-    max-width: 440px;
-    font-family: var(--font-serif);
-    font-size: .92rem;
-    line-height: 1.8;
-    color: rgba(232,230,225,.62);
-    text-shadow: 0 4px 20px rgba(0,0,0,.9);
-  }
-
-  .about-collage-caption {
-    position: absolute;
-    left: 0;
-    bottom: 2.4rem;
-    z-index: 22;
-    font-family: var(--font-mono);
-    font-size: .66rem;
-    letter-spacing: .22em;
-    color: rgba(255,255,255,.36);
-  }
-
-  .about-collage-count {
-    position: absolute;
-    right: 0;
-    bottom: 2.4rem;
-    z-index: 22;
-    font-family: var(--font-mono);
-    font-size: .66rem;
-    letter-spacing: .18em;
-    color: rgba(255,255,255,.36);
-  }
-
-  @media (max-width: 900px) {
-    .about-collage {
-      height: 720px;
-      min-height: 720px;
-      margin: 0 -1rem;
-    }
-    .about-collage::before { inset: 12% 8%; }
-    .about-collage-center h3 { font-size: clamp(2.7rem, 12vw, 4.5rem); }
-    .about-collage-center p { width: min(72vw, 360px); font-size: .82rem; }
-    .about-card { width: var(--w-mobile, 116px); }
-    .about-collage-caption { left: 1rem; }
-    .about-collage-count { right: 1rem; }
-  }
-
-  @media (max-width: 560px) {
-    .about-collage {
-      height: 650px;
-      min-height: 650px;
-    }
-    .about-collage-center { width: 78%; }
-    .about-collage-center p { display: none; }
-    .about-card { width: var(--w-mobile, 96px); }
+  @media(max-width:560px){
+    .about-collage{height:690px;min-height:690px;}
+    .about-card{width:var(--w-mobile,76px);}
+    .about-collage-caption,.about-collage-count{bottom:1.4rem;font-size:.55rem;}
   }
 
   /* ===== CONTACT ME 底部区域 ===== */
@@ -1520,204 +1386,103 @@ document.querySelectorAll('.award-item[data-cert-img]').forEach(item => {
 
 
 <script>
-/* ===== About Me 35 张照片：滚轮驱动的 35 帧影像叙事 ===== */
+/* ===== About Me 35 张照片：滚轮控制的完整影像贴图墙 ===== */
 (() => {
-  const collage = document.getElementById('aboutCollage');
-  const stage = document.getElementById('aboutCollageStage');
-  const counter = document.getElementById('aboutCollageCount');
-  if (!collage || !stage) return;
+  const collage=document.getElementById('aboutCollage');
+  const stage=document.getElementById('aboutCollageStage');
+  const counter=document.getElementById('aboutCollageCount');
+  if(!collage||!stage)return;
+  const cards=[...stage.querySelectorAll('.about-card')];
 
-  const cards = [...stage.querySelectorAll('.about-card')];
-  const layouts = [
-    [-35,-31,-80,-10,1.00], [4,-36,20,5,1.12], [36,-29,-30,10,.92],
-    [-49,-8,40,-12,.90], [-17,-10,120,7,1.15], [18,-9,65,-8,.98], [47,-5,-10,13,1.02],
-    [-43,18,-30,9,1.00], [-20,25,80,-7,.94], [7,20,155,6,1.18], [31,22,60,-11,.96],
-    [-51,42,10,-9,.84], [-30,46,100,8,.96], [0,43,190,-4,.98], [34,44,75,12,.88],
-    [54,30,-45,-7,.90], [-62,-28,-140,8,.78], [64,-18,-100,12,.82],
-    [-65,8,-80,-13,.80], [67,9,-30,10,.86], [-61,52,-100,6,.76], [61,48,-70,-10,.78],
-    [-8,-51,-110,11,.82], [21,-50,-55,-8,.84], [-39,-48,-10,8,.75], [45,-46,-125,7,.76],
-    [-74,-3,-130,5,.68], [76,4,-115,-7,.70], [-75,31,-145,11,.67], [74,32,-150,-8,.69],
-    [-46,63,-90,-7,.66], [-15,62,-30,9,.70], [17,61,-70,-6,.69], [48,62,-100,8,.65],
-    [0,70,-150,0,.62]
+  const desktopPositions=[
+    [7,10,-35,-7,.96],[20,8,25,5,1.02],[33,11,-15,-3,.94],[47,8,45,6,1.02],[61,11,-20,-5,.96],[74,8,30,4,.94],[87,12,-45,-6,.90],
+    [3,27,40,5,.91],[16,25,-10,-4,1.02],[30,29,55,6,.96],[44,25,-35,-5,1.04],[58,28,20,4,.94],[72,25,-55,-6,1.00],[86,29,15,5,.90],
+    [7,45,-20,-5,1.00],[20,43,50,4,.94],[34,47,-45,-7,1.02],[48,43,15,5,.96],[62,46,-30,-4,1.03],[76,43,50,6,.93],[90,46,-20,-5,.87],
+    [3,63,35,5,.90],[17,61,-30,-6,.98],[31,66,20,4,.94],[45,62,-55,-5,1.04],[59,65,35,7,.94],[73,61,-15,-4,.98],[87,65,45,5,.90],
+    [8,81,-35,-6,.92],[21,79,20,4,.97],[35,83,-50,-5,.91],[49,80,35,6,1.00],[63,82,-20,-4,.94],[77,79,55,5,.96],[90,82,-35,-6,.88]
   ];
-  const compactLayouts = [
-    [-34,-34,-70,-9,.90],[0,-38,20,5,1],[34,-33,-45,9,.85],
-    [-47,-8,35,-10,.80],[-18,-10,100,6,1.02],[17,-9,55,-7,.90],[45,-5,-10,11,.82],
-    [-43,19,-20,8,.85],[-19,24,75,-7,.88],[7,20,135,5,1.0],[32,22,50,-10,.86],
-    [-49,42,0,-7,.72],[-27,45,85,8,.82],[0,43,160,-4,.88],[31,44,55,10,.74],
-    [51,30,-45,-7,.76],[-60,-27,-120,8,.64],[61,-17,-95,11,.68],
-    [-61,7,-70,-12,.66],[62,9,-25,10,.70],[-59,51,-95,5,.62],[60,48,-65,-9,.64],
-    [-9,-53,-100,10,.68],[22,-51,-50,-8,.68],[-39,-49,-5,8,.62],[44,-47,-110,7,.62],
-    [-72,-1,-125,5,.56],[72,4,-105,-7,.58],[-73,31,-135,10,.55],[73,32,-140,-8,.56],
-    [-45,63,-85,-7,.54],[-15,64,-20,9,.58],[17,63,-60,-6,.56],[47,63,-95,8,.52],[0,72,-145,0,.50]
+  const mobilePositions=[
+    [8,8,-20,-6,.82],[29,7,25,5,.86],[51,9,-15,-4,.84],[73,7,35,6,.82],[92,10,-25,-5,.76],
+    [5,23,35,5,.78],[27,25,-30,-5,.84],[49,22,20,4,.82],[71,25,-45,-6,.80],[94,24,15,5,.72],
+    [8,39,-25,-4,.84],[29,41,35,5,.80],[51,38,-40,-6,.86],[73,41,20,4,.80],[92,39,-20,-5,.72],
+    [5,55,25,5,.76],[27,57,-35,-5,.82],[49,54,15,4,.84],[71,57,-45,-6,.80],[94,55,30,5,.70],
+    [8,71,-20,-5,.80],[29,73,40,5,.78],[51,70,-30,-4,.84],[73,73,20,6,.78],[92,71,-35,-5,.70],
+    [5,87,30,5,.72],[27,88,-25,-5,.76],[49,86,45,4,.78],[71,88,-35,-6,.74],[94,87,20,5,.66],
+    [17,97,-30,-4,.70],[39,97,20,5,.72],[61,97,-45,-5,.70],[83,97,35,4,.68],[50,99,-15,-3,.60]
   ];
 
-  let compact = window.innerWidth < 900;
-  let progress = 0;
-  let raf = 0;
-  let pointerX = 0;
-  let pointerY = 0;
-  let lastWheelTime = 0;
-  let wheelLocked = false;
-  const WHEEL_TO_PROGRESS = 0.00072;
-  const FAST_UPWARD_DELTA = -42;
-  const EDGE_EPS = 0.0005;
+  let compact=window.innerWidth<900,progress=0,pointerX=0,pointerY=0,lastWheelTime=0;
+  const WHEEL_TO_PROGRESS=.00072,EDGE_EPS=.0005,FAST_UPWARD_DELTA=-42;
 
-  function getLayout() {
-    return compact ? compactLayouts : layouts;
-  }
-
-  function applyCards() {
-    const data = getLayout();
-    const width = compact ? 108 : 158;
-
-    cards.forEach((card, i) => {
-      const [x,y,z,r,s] = data[i];
-      const jitterX = Math.sin((i + 1) * 12.37) * (compact ? 3 : 5);
-      const jitterY = Math.cos((i + 1) * 8.91) * (compact ? 3 : 5);
-
-      card.dataset.x = x * (compact ? 1.45 : 1.0) + jitterX;
-      card.dataset.y = y * (compact ? 1.18 : 1.0) + jitterY;
-      card.dataset.z = z;
-      card.dataset.r = r;
-      card.dataset.s = s;
-
-      card.style.setProperty('--w', width + 'px');
-      card.style.setProperty('--w-mobile', Math.max(82, width - 22) + 'px');
-      card.style.zIndex = 2 + Math.round((z + 180) / 20);
+  function positions(){return compact?mobilePositions:desktopPositions;}
+  function setup(){
+    const data=positions(),width=compact?100:148;
+    cards.forEach((card,i)=>{
+      const [x,y,r,z,s]=data[i];
+      card.dataset.x=x;card.dataset.y=y;card.dataset.r=r;card.dataset.z=z;card.dataset.s=s;
+      card.style.setProperty('--w',width+'px');
+      card.style.setProperty('--w-mobile',Math.max(68,width-22)+'px');
+      card.style.zIndex=10+i;
     });
     render();
   }
-
-  function render() {
-    const data = getLayout();
-    const total = cards.length;
-
-    cards.forEach((card, i) => {
-      const x = Number(card.dataset.x);
-      const y = Number(card.dataset.y);
-      const z = Number(card.dataset.z);
-      const r = Number(card.dataset.r);
-      const s = Number(card.dataset.s);
-
-      // 每张照片拥有自己的时间窗口：由左侧飞入最终位置。
-      const start = i / total;
-      const end = (i + 1) / total;
-      const local = Math.max(0, Math.min(1, (progress - start) / (end - start)));
-
-      // easeOutCubic：进入时快，接近最终位置时减速。
-      const eased = 1 - Math.pow(1 - local, 3);
-
-      // 尚未轮到的照片停在屏幕左侧；已经完成的照片保持在最终构图。
-      const enterX = compact ? -120 : -92;
-      const enterY = y * 0.92;
-      const px = x + (enterX - x) * (1 - eased);
-      const py = enterY + (y - enterY) * eased;
-
-      const depth = z + (1 - eased) * -180;
-      const scale = s * (0.78 + 0.22 * eased);
-      const rotation = r + (1 - eased) * (compact ? -9 : -14);
-      const opacity = 0.04 + eased * 0.96;
-      const blur = (1 - eased) * 4;
-
-      // 鼠标横向移动只提供很轻的空间视差，不会抢走滚轮控制权。
-      const parallaxX = pointerX * (compact ? 5 : 10) * (0.5 + (depth + 180) / 420);
-      const parallaxY = pointerY * (compact ? 4 : 7) * (0.5 + (depth + 180) / 420);
-
-      card.style.transform =
-        'translate3d(calc(-50% + ' + px + 'vw + ' + parallaxX + 'px), calc(-50% + ' +
-        py + 'vh + ' + parallaxY + 'px), ' + depth + 'px) rotate(' +
-        rotation + 'deg) scale(' + scale + ')';
-      card.style.opacity = opacity.toFixed(3);
-      card.style.filter = 'blur(' + blur.toFixed(2) + 'px)';
+  function easeOutCubic(t){return 1-Math.pow(1-t,3);}
+  function render(){
+    const total=cards.length;
+    cards.forEach((card,i)=>{
+      const x=Number(card.dataset.x),y=Number(card.dataset.y),r=Number(card.dataset.r),z=Number(card.dataset.z),s=Number(card.dataset.s);
+      const start=i/total,end=(i+1)/total;
+      const local=Math.max(0,Math.min(1,(progress-start)/(end-start)));
+      const eased=easeOutCubic(local);
+      const hiddenX=-18-(i%3)*4,hiddenY=y+((i%2===0)?-5:5);
+      const currentX=hiddenX+(x-hiddenX)*eased;
+      const currentY=hiddenY+(y-hiddenY)*eased;
+      const currentZ=z-(1-eased)*150;
+      const currentScale=s*(.72+eased*.28);
+      const currentRotation=r+(1-eased)*(i%2===0?-12:12);
+      const opacity=Math.max(0,Math.min(1,eased));
+      const blur=(1-eased)*5;
+      const parallaxX=pointerX*(compact?2.8:5.5),parallaxY=pointerY*(compact?2.2:4.2);
+      card.style.setProperty('--px','calc('+currentX+'% + '+parallaxX+'px)');
+      card.style.setProperty('--py','calc('+currentY+'% + '+parallaxY+'px)');
+      card.style.setProperty('--pz',currentZ+'px');
+      card.style.setProperty('--scale',currentScale);
+      card.style.setProperty('--r',currentRotation+'deg');
+      card.style.opacity=opacity.toFixed(3);
+      card.style.filter='blur('+blur.toFixed(2)+'px)';
+      card.classList.toggle('is-visible',opacity>.55);
     });
-
-    const shown = Math.min(total, Math.floor(progress * total) + (progress > 0 ? 1 : 0));
-    if (counter) {
-      counter.textContent = String(Math.min(total, shown)).padStart(2,'0') + '—' + String(total).padStart(2,'0');
-    }
-
-    // 到最后一帧时，照片墙保持完整，不再继续被滚轮推进。
-    collage.classList.toggle('is-complete', progress >= 1 - EDGE_EPS);
+    const shown=progress>=1-EDGE_EPS?total:Math.floor(progress*total);
+    if(counter)counter.textContent=String(shown).padStart(2,'0')+'—'+String(total).padStart(2,'0');
+    collage.classList.toggle('is-complete',progress>=1-EDGE_EPS);
   }
-
-  function animate() {
-    // 用很轻的平滑跟手，避免图片瞬间跳动。
+  function isActive(){
+    const rect=collage.getBoundingClientRect(),center=window.innerHeight*.5;
+    return rect.top<center+120&&rect.bottom>center-120;
+  }
+  function onWheel(e){
+    if(!isActive()||!e.deltaY)return;
+    const delta=e.deltaY,now=performance.now(),dt=now-lastWheelTime;lastWheelTime=now;
+    if(delta>0&&progress<1-EDGE_EPS){
+      e.preventDefault();progress=Math.min(1,progress+delta*WHEEL_TO_PROGRESS);render();return;
+    }
+    if(delta>0&&progress>=1-EDGE_EPS)return;
+    if(delta<0&&progress>EDGE_EPS){
+      const fastUp=delta<=FAST_UPWARD_DELTA||(dt>0&&Math.abs(delta/Math.max(dt,1))>.9);
+      if(fastUp)return;
+      e.preventDefault();progress=Math.max(0,progress+delta*WHEEL_TO_PROGRESS);render();
+    }
+  }
+  collage.addEventListener('pointermove',e=>{
+    const rect=collage.getBoundingClientRect();
+    pointerX=(e.clientX-rect.left)/rect.width-.5;
+    pointerY=(e.clientY-rect.top)/rect.height-.5;
     render();
-    raf = requestAnimationFrame(animate);
-  }
-
-  function isCollageActive() {
-    const rect = collage.getBoundingClientRect();
-    const center = window.innerHeight * 0.5;
-    return rect.top < center + 80 && rect.bottom > center - 80;
-  }
-
-  function onWheel(e) {
-    if (!isCollageActive()) return;
-
-    const delta = e.deltaY;
-    if (!delta) return;
-
-    const now = performance.now();
-    const dt = now - lastWheelTime;
-    lastWheelTime = now;
-
-    // 向下：照片未展示完之前，锁住页面滚动。
-    if (delta > 0 && progress < 1 - EDGE_EPS) {
-      e.preventDefault();
-      wheelLocked = true;
-      progress = Math.min(1, progress + delta * WHEEL_TO_PROGRESS);
-      render();
-      return;
-    }
-
-    // 向下且已经完成：解除锁定，让浏览器进入下一页面。
-    if (delta > 0 && progress >= 1 - EDGE_EPS) {
-      wheelLocked = false;
-      return;
-    }
-
-    // 向上慢滚：照片倒放。
-    if (delta < 0 && progress > EDGE_EPS) {
-      // 大幅、快速的上滚视为“离开此章节”，不拦截浏览器默认滚动。
-      const fastUp = delta <= FAST_UPWARD_DELTA || (dt > 0 && Math.abs(delta / dt) > 0.9);
-      if (!fastUp) {
-        e.preventDefault();
-        wheelLocked = true;
-        progress = Math.max(0, progress + delta * WHEEL_TO_PROGRESS);
-        render();
-      } else {
-        wheelLocked = false;
-      }
-      return;
-    }
-
-    // 已经倒回起点：允许页面继续向上。
-    wheelLocked = false;
-  }
-
-  collage.addEventListener('pointermove', e => {
-    const rect = collage.getBoundingClientRect();
-    pointerX = (e.clientX - rect.left) / rect.width - 0.5;
-    pointerY = (e.clientY - rect.top) / rect.height - 0.5;
-  }, {passive:true});
-
-  collage.addEventListener('pointerleave', () => {
-    pointerX *= .25;
-    pointerY *= .25;
-  });
-
-  window.addEventListener('wheel', onWheel, {passive:false});
-
-  window.addEventListener('resize', () => {
-    compact = window.innerWidth < 900;
-    applyCards();
-  });
-
-  // 初始状态：所有照片都在左侧等待进入。
-  applyCards();
-  animate();
+  },{passive:true});
+  collage.addEventListener('pointerleave',()=>{pointerX*=.2;pointerY*=.2;render();});
+  window.addEventListener('wheel',onWheel,{passive:false});
+  window.addEventListener('resize',()=>{compact=window.innerWidth<900;setup();});
+  setup();
 })();
 </script>
 
