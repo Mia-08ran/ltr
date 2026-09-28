@@ -1063,14 +1063,8 @@
         <figure class="about-card interactable" data-index="35" style="--i:35"><img src="35.jpg" alt="About Me image 35" loading="lazy"></figure>
       </div>
 
-      <div class="about-collage-center">
-        <span class="eyebrow">TIANRAN-LI / VISUAL ARCHIVE</span>
-        <h3>About Me</h3>
-        <p>把学习、技术、创作与生活留下来的 35 个瞬间，组成一面属于我的视觉档案墙。</p>
-      </div>
-
-      <span class="about-collage-caption">MOVE YOUR CURSOR / EXPLORE THE ARCHIVE</span>
-      <span class="about-collage-count">01—35 / VISUAL NOTES</span>
+      <span class="about-collage-caption">SCROLL TO EXPLORE</span>
+      <span class="about-collage-count" id="aboutCollageCount">00—35</span>
     </div>
   </section>
 
@@ -1526,10 +1520,11 @@ document.querySelectorAll('.award-item[data-cert-img]').forEach(item => {
 
 
 <script>
-/* ===== About Me 35 张照片：3D 漂浮墙 ===== */
+/* ===== About Me 35 张照片：滚轮驱动的 35 帧影像叙事 ===== */
 (() => {
   const collage = document.getElementById('aboutCollage');
   const stage = document.getElementById('aboutCollageStage');
+  const counter = document.getElementById('aboutCollageCount');
   if (!collage || !stage) return;
 
   const cards = [...stage.querySelectorAll('.about-card')];
@@ -1545,10 +1540,9 @@ document.querySelectorAll('.award-item[data-cert-img]').forEach(item => {
     [-46,63,-90,-7,.66], [-15,62,-30,9,.70], [17,61,-70,-6,.69], [48,62,-100,8,.65],
     [0,70,-150,0,.62]
   ];
-
   const compactLayouts = [
-    [-34,-34,-70,-9,.9],[0,-38,20,5,1],[34,-33,-45,9,.85],
-    [-47,-8,35,-10,.8],[-18,-10,100,6,1.02],[17,-9,55,-7,.9],[45,-5,-10,11,.82],
+    [-34,-34,-70,-9,.90],[0,-38,20,5,1],[34,-33,-45,9,.85],
+    [-47,-8,35,-10,.80],[-18,-10,100,6,1.02],[17,-9,55,-7,.90],[45,-5,-10,11,.82],
     [-43,19,-20,8,.85],[-19,24,75,-7,.88],[7,20,135,5,1.0],[32,22,50,-10,.86],
     [-49,42,0,-7,.72],[-27,45,85,8,.82],[0,43,160,-4,.88],[31,44,55,10,.74],
     [51,30,-45,-7,.76],[-60,-27,-120,8,.64],[61,-17,-95,11,.68],
@@ -1559,58 +1553,148 @@ document.querySelectorAll('.award-item[data-cert-img]').forEach(item => {
   ];
 
   let compact = window.innerWidth < 900;
-  let pointerX = 0, pointerY = 0, targetX = 0, targetY = 0;
-  let scrollOffset = 0;
+  let progress = 0;
+  let raf = 0;
+  let pointerX = 0;
+  let pointerY = 0;
+  let lastWheelTime = 0;
+  let wheelLocked = false;
+  const WHEEL_TO_PROGRESS = 0.00072;
+  const FAST_UPWARD_DELTA = -42;
+  const EDGE_EPS = 0.0005;
 
-  function applyLayout() {
-    const data = compact ? compactLayouts : layouts;
+  function getLayout() {
+    return compact ? compactLayouts : layouts;
+  }
+
+  function applyCards() {
+    const data = getLayout();
     const width = compact ? 108 : 158;
+
     cards.forEach((card, i) => {
       const [x,y,z,r,s] = data[i];
       const jitterX = Math.sin((i + 1) * 12.37) * (compact ? 3 : 5);
       const jitterY = Math.cos((i + 1) * 8.91) * (compact ? 3 : 5);
-      card.style.setProperty('--x', (x * (compact ? 1.45 : 1.0) + jitterX) + 'vw');
-      card.style.setProperty('--y', (y * (compact ? 1.18 : 1.0) + jitterY) + 'vh');
-      card.style.setProperty('--z', z + 'px');
-      card.style.setProperty('--r', r + 'deg');
-      card.style.setProperty('--s', s);
+
+      card.dataset.x = x * (compact ? 1.45 : 1.0) + jitterX;
+      card.dataset.y = y * (compact ? 1.18 : 1.0) + jitterY;
+      card.dataset.z = z;
+      card.dataset.r = r;
+      card.dataset.s = s;
+
       card.style.setProperty('--w', width + 'px');
       card.style.setProperty('--w-mobile', Math.max(82, width - 22) + 'px');
       card.style.zIndex = 2 + Math.round((z + 180) / 20);
     });
+    render();
   }
 
   function render() {
-    const rx = pointerX * (compact ? 2.8 : 5.5);
-    const ry = pointerY * (compact ? 2.2 : 4.2);
+    const data = getLayout();
+    const total = cards.length;
+
     cards.forEach((card, i) => {
-      const depth = parseFloat(card.style.getPropertyValue('--z')) || 0;
-      const factor = 0.45 + (depth + 180) / 420;
-      const x = pointerX * 18 * factor;
-      const y = pointerY * 14 * factor;
-      const base = card.style.transform;
-      card.style.transform = base.replace('translate3d(', 'translate3d(');
-      card.style.setProperty('--px', x + 'px');
-      card.style.setProperty('--py', y + 'px');
+      const x = Number(card.dataset.x);
+      const y = Number(card.dataset.y);
+      const z = Number(card.dataset.z);
+      const r = Number(card.dataset.r);
+      const s = Number(card.dataset.s);
+
+      // 每张照片拥有自己的时间窗口：由左侧飞入最终位置。
+      const start = i / total;
+      const end = (i + 1) / total;
+      const local = Math.max(0, Math.min(1, (progress - start) / (end - start)));
+
+      // easeOutCubic：进入时快，接近最终位置时减速。
+      const eased = 1 - Math.pow(1 - local, 3);
+
+      // 尚未轮到的照片停在屏幕左侧；已经完成的照片保持在最终构图。
+      const enterX = compact ? -120 : -92;
+      const enterY = y * 0.92;
+      const px = x + (enterX - x) * (1 - eased);
+      const py = enterY + (y - enterY) * eased;
+
+      const depth = z + (1 - eased) * -180;
+      const scale = s * (0.78 + 0.22 * eased);
+      const rotation = r + (1 - eased) * (compact ? -9 : -14);
+      const opacity = 0.04 + eased * 0.96;
+      const blur = (1 - eased) * 4;
+
+      // 鼠标横向移动只提供很轻的空间视差，不会抢走滚轮控制权。
+      const parallaxX = pointerX * (compact ? 5 : 10) * (0.5 + (depth + 180) / 420);
+      const parallaxY = pointerY * (compact ? 4 : 7) * (0.5 + (depth + 180) / 420);
+
+      card.style.transform =
+        'translate3d(calc(-50% + ' + px + 'vw + ' + parallaxX + 'px), calc(-50% + ' +
+        py + 'vh + ' + parallaxY + 'px), ' + depth + 'px) rotate(' +
+        rotation + 'deg) scale(' + scale + ')';
+      card.style.opacity = opacity.toFixed(3);
+      card.style.filter = 'blur(' + blur.toFixed(2) + 'px)';
     });
-    stage.style.transform = 'rotateX(' + (-ry) + 'deg) rotateY(' + rx + 'deg) translate3d(0,' + scrollOffset + 'px,0)';
-    requestAnimationFrame(render);
+
+    const shown = Math.min(total, Math.floor(progress * total) + (progress > 0 ? 1 : 0));
+    if (counter) {
+      counter.textContent = String(Math.min(total, shown)).padStart(2,'0') + '—' + String(total).padStart(2,'0');
+    }
+
+    // 到最后一帧时，照片墙保持完整，不再继续被滚轮推进。
+    collage.classList.toggle('is-complete', progress >= 1 - EDGE_EPS);
   }
 
-  // 将鼠标位移转为整组空间的轻微视差；单张卡片保留自己的旋转与深度。
-  function updateCards() {
-    cards.forEach((card, i) => {
-      const depth = parseFloat(card.style.getPropertyValue('--z')) || 0;
-      const factor = 0.55 + (depth + 180) / 420;
-      const px = pointerX * (compact ? 8 : 14) * factor;
-      const py = pointerY * (compact ? 6 : 10) * factor;
-      const [x,y,z,r,s] = (compact ? compactLayouts : layouts)[i];
-      const jitterX = Math.sin((i + 1) * 12.37) * (compact ? 3 : 5);
-      const jitterY = Math.cos((i + 1) * 8.91) * (compact ? 3 : 5);
-      card.style.transform =
-        'translate3d(calc(-50% + ' + (x * (compact ? 1.45 : 1.0) + jitterX) + 'vw + ' + px + 'px), calc(-50% + ' +
-        (y * (compact ? 1.18 : 1.0) + jitterY) + 'vh + ' + py + 'px), ' + z + 'px) rotate(' + r + 'deg) scale(' + s + ')';
-    });
+  function animate() {
+    // 用很轻的平滑跟手，避免图片瞬间跳动。
+    render();
+    raf = requestAnimationFrame(animate);
+  }
+
+  function isCollageActive() {
+    const rect = collage.getBoundingClientRect();
+    const center = window.innerHeight * 0.5;
+    return rect.top < center + 80 && rect.bottom > center - 80;
+  }
+
+  function onWheel(e) {
+    if (!isCollageActive()) return;
+
+    const delta = e.deltaY;
+    if (!delta) return;
+
+    const now = performance.now();
+    const dt = now - lastWheelTime;
+    lastWheelTime = now;
+
+    // 向下：照片未展示完之前，锁住页面滚动。
+    if (delta > 0 && progress < 1 - EDGE_EPS) {
+      e.preventDefault();
+      wheelLocked = true;
+      progress = Math.min(1, progress + delta * WHEEL_TO_PROGRESS);
+      render();
+      return;
+    }
+
+    // 向下且已经完成：解除锁定，让浏览器进入下一页面。
+    if (delta > 0 && progress >= 1 - EDGE_EPS) {
+      wheelLocked = false;
+      return;
+    }
+
+    // 向上慢滚：照片倒放。
+    if (delta < 0 && progress > EDGE_EPS) {
+      // 大幅、快速的上滚视为“离开此章节”，不拦截浏览器默认滚动。
+      const fastUp = delta <= FAST_UPWARD_DELTA || (dt > 0 && Math.abs(delta / dt) > 0.9);
+      if (!fastUp) {
+        e.preventDefault();
+        wheelLocked = true;
+        progress = Math.max(0, progress + delta * WHEEL_TO_PROGRESS);
+        render();
+      } else {
+        wheelLocked = false;
+      }
+      return;
+    }
+
+    // 已经倒回起点：允许页面继续向上。
+    wheelLocked = false;
   }
 
   collage.addEventListener('pointermove', e => {
@@ -1620,27 +1704,20 @@ document.querySelectorAll('.award-item[data-cert-img]').forEach(item => {
   }, {passive:true});
 
   collage.addEventListener('pointerleave', () => {
-    targetX = targetY = 0;
-    pointerX *= .35;
-    pointerY *= .35;
+    pointerX *= .25;
+    pointerY *= .25;
   });
 
-  window.addEventListener('scroll', () => {
-    const rect = collage.getBoundingClientRect();
-    const center = window.innerHeight * .55;
-    const delta = (rect.top + rect.height / 2 - center) / window.innerHeight;
-    scrollOffset = Math.max(-28, Math.min(28, -delta * 28));
-  }, {passive:true});
+  window.addEventListener('wheel', onWheel, {passive:false});
 
   window.addEventListener('resize', () => {
     compact = window.innerWidth < 900;
-    applyLayout();
-    updateCards();
+    applyCards();
   });
 
-  applyLayout();
-  updateCards();
-  render();
+  // 初始状态：所有照片都在左侧等待进入。
+  applyCards();
+  animate();
 })();
 </script>
 
